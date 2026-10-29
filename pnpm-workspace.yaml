@@ -1,2 +1,5 @@
 allowBuilds:
   workerd: true
+
+minimumReleaseAgeExclude:
+  - '@morinoparty/hagaki@0.4.0'

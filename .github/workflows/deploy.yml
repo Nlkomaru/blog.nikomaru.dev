@@ -28,11 +28,6 @@ jobs:
           node-version-file: .node-version
           cache: pnpm
 
-      - name: Configure GitHub Packages auth
-        run: |
-          echo "@morinoparty:registry=https://npm.pkg.github.com" >> ~/.npmrc
-          echo "//npm.pkg.github.com/:_authToken=${{ secrets.HAGAKI_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm run check
