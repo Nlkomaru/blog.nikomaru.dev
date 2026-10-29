@@ -9,8 +9,9 @@ export default defineConfig({
 		compatibilityDate: "2026-10-01",
 		compatibilityFlags: ["nodejs_compat", "global_fetch_strictly_public"],
 		entrypoint: "@tanstack/react-start/server-entry",
-		// Served at https://blog-nikomaru-dev.<subdomain>.workers.dev only.
+		// Served at https://blog-nikomaru-dev.<subdomain>.workers.dev and custom domain
 		workersDev: true,
+		domains: ["blog.nikomaru.dev"],
 		previewUrls: true,
 		observability: { enabled: true },
 		env: {
