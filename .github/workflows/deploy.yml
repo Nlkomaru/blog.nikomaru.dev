@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.event_name == 'push' && 'deploy-production' || format('deploy-{0}', github.ref) }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CF_SEND_TELEMETRY: "false"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Configure GitHub Packages auth
+        run: |
+          echo "@morinoparty:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "//npm.pkg.github.com/:_authToken=${{ secrets.HAGAKI_GITHUB_TOKEN || secrets.GITHUB_TOKEN }}" >> ~/.npmrc
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run check
+
+      - run: pnpm run typecheck
+
+      - run: pnpm run build
+
+      - if: github.event_name == 'push' && env.CLOUDFLARE_API_TOKEN != ''
+        run: |
+          cat << EOF > .secrets.vars
+          HAGAKI_GITHUB_TOKEN=${{ secrets.HAGAKI_GITHUB_TOKEN }}
+          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+          AUTH_GITHUB_ID=${{ secrets.AUTH_GITHUB_ID }}
+          AUTH_GITHUB_SECRET=${{ secrets.AUTH_GITHUB_SECRET }}
+          EOF
+          pnpm exec cf deploy --secrets-file .secrets.vars --mode production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
