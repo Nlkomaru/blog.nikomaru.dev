@@ -37,9 +37,9 @@ jobs:
 
       - run: pnpm run check
 
-      - run: pnpm run typecheck
-
       - run: pnpm run build
+
+      - run: pnpm run typecheck
 
       - if: github.event_name == 'push' && env.CLOUDFLARE_API_TOKEN != ''
         run: |
