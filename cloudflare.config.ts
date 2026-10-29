@@ -28,6 +28,8 @@ export default defineConfig({
 			// (or the dashboard) in production.
 			HAGAKI_GITHUB_TOKEN: bindings.secret(),
 			AUTH_SECRET: bindings.secret(),
+			AUTH_GITHUB_ID: bindings.secret(),
+			AUTH_GITHUB_SECRET: bindings.secret(),
 			GITHUB_CLIENT_ID: bindings.secret(),
 			GITHUB_CLIENT_SECRET: bindings.secret(),
 		},

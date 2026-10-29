@@ -27,8 +27,16 @@ async function buildAuth(baseURL: string) {
 		},
 		socialProviders: {
 			github: {
-				clientId: env.GITHUB_CLIENT_ID || "",
-				clientSecret: env.GITHUB_CLIENT_SECRET || "",
+				clientId:
+					(env as unknown as Record<string, string | undefined>)
+						.AUTH_GITHUB_ID ||
+					env.GITHUB_CLIENT_ID ||
+					"",
+				clientSecret:
+					(env as unknown as Record<string, string | undefined>)
+						.AUTH_GITHUB_SECRET ||
+					env.GITHUB_CLIENT_SECRET ||
+					"",
 				mapProfileToUser: (profile) => {
 					return {
 						name: profile.name || profile.login,
