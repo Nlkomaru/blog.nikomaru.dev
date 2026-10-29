@@ -1,3 +1,4 @@
+import type { WikiPostDetail } from "@morinoparty/hagaki";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
@@ -19,7 +20,12 @@ const getPostFn = createServerFn({ method: "GET" })
 		const session = await auth.api.getSession({
 			headers: getRequest().headers,
 		});
-		const post = await client.posts.getBySlug(slug);
+		let post: WikiPostDetail | null = null;
+		try {
+			post = await client.posts.getBySlug(slug);
+		} catch {
+			post = null;
+		}
 		if (!post) return null;
 		return {
 			title: post.title,
