@@ -1,0 +1,14 @@
+# Worker secrets for local development (`cf dev`).
+# In production, set these via `cf deploy --secrets-file` or Cloudflare dashboard.
+
+# GitHub Personal Access Token with repo Contents (read & write) permission
+HAGAKI_GITHUB_TOKEN=
+
+# Better Auth secret encryption key (e.g. `openssl rand -base64 32`)
+AUTH_SECRET=
+
+# GitHub OAuth App credentials (from https://github.com/settings/developers)
+# Authorization callback URL: http://localhost:8787/api/auth/callback/github (for dev)
+# Authorization callback URL: https://blog.nikomaru.dev/api/auth/callback/github (for prod)
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=

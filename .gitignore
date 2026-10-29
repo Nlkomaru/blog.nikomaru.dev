@@ -1,0 +1,12 @@
+node_modules
+dist
+.cloudflare/
+.tanstack
+*.log
+.DS_Store
+.idea
+.vscode
+.env
+.env.local
+.dev.vars
+app/routeTree.gen.ts
