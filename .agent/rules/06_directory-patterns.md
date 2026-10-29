@@ -1,0 +1,25 @@
+## ディレクトリ配置規則
+
+- `app/routes/` - TanStack Router によるファイルベースルーティング
+  - `__root.tsx`: ルートレイアウト（ナビゲーションバー、フッター、HTML構造）
+  - `index.tsx`: トップページ（最新記事一覧、自己紹介、タグ/カテゴリリンク）
+  - `posts/index.tsx`: 記事一覧ページ（検索・カテゴリフィルタ）
+  - `posts/$slug/index.tsx`: 記事詳細ページ（MDX レンダリング、AVIF 画像表示）
+  - `posts/new.tsx`: 記事新規作成ページ（Better Auth 認証ガード、MDXEditor、画像アップロード）
+  - `posts/$slug/edit.tsx`: 記事編集ページ
+  - `categories/index.tsx`: カテゴリ一覧
+  - `categories/new.tsx`, `categories/$slug/edit.tsx`: カテゴリ新規作成・編集
+  - `auth/sign-in.tsx`: GitHub サインイン・執筆者認証ページ
+  - `api/auth/$.ts`: Better Auth API ハンドラーエンドポイント
+- `app/components/ui/` - shadcn/ui プリミティブコンポーネント（Button, Input, Card, Badge, Label など）
+- `app/components/` - アプリ共通 UI コンポーネント（Navigation, CategoryForm, CategoryInput, GitHubIcon など）
+- `app/lib/` - ヘルパー関数、認証、サーバー関数
+  - `auth.ts`: Better Auth 設定本体（ユーザー制限フック `validateUserInfo`）
+  - `auth-client.ts`: クライアント用 Better Auth クライアント
+  - `auth-server.ts`: サーバー専用のセッション検証・認可関数
+  - `auth-fns.ts`: TanStack Start Server Function（セッション確認 RPC）
+  - `category-server.ts`: カテゴリ取得・更新用 Server Function
+  - `committer.ts`: Better Auth セッションから GitHub コミッター情報を解決する関数
+- `cloudflare.config.ts` - Cloudflare Workers 設定（カスタムドメイン、バインディング、環境変数）
+- `biome.json` - コード品質管理（Biome linter / formatter 設定）
+- `.github/workflows/deploy.yml` - 本番デプロイ用 GitHub Actions ワークフロー
