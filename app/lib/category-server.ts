@@ -4,15 +4,26 @@ import { requireSession } from "./auth-server";
 import { getHagakiClient } from "./hagaki";
 
 export const listCategoriesFn = createServerFn({ method: "GET" }).handler(
-	async () => (await getHagakiClient()).categories.list(),
+	async () => {
+		try {
+			const client = await getHagakiClient();
+			return await client.categories.list();
+		} catch {
+			return [];
+		}
+	},
 );
 
 export const getCategoryFn = createServerFn({ method: "GET" })
 	.validator((slug: string) => slug)
 	.handler(async ({ data: slug }) => {
-		const client = await getHagakiClient();
-		const list = await client.categories.list();
-		return list.find((c) => c.slug === slug) ?? null;
+		try {
+			const client = await getHagakiClient();
+			const list = await client.categories.list();
+			return list.find((c) => c.slug === slug) ?? null;
+		} catch {
+			return null;
+		}
 	});
 
 const SLUG_RE = /^[a-z0-9-]+$/;

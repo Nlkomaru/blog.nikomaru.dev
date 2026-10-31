@@ -1,3 +1,4 @@
+import type { WikiCategory } from "@morinoparty/hagaki";
 import { toUrlSlug } from "@morinoparty/hagaki";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
@@ -12,11 +13,19 @@ import { getHagakiClient } from "../lib/hagaki";
 
 const newPostDataFn = createServerFn({ method: "GET" }).handler(async () => {
 	const client = await getHagakiClient();
-	const [categories, posts] = await Promise.all([
-		client.categories.list(),
-		client.posts.list(),
-	]);
-	return { categories, slugs: posts.map((p) => p.slug) };
+	let categories: WikiCategory[] = [];
+	let slugs: string[] = [];
+	try {
+		const [categoryList, postList] = await Promise.all([
+			client.categories.list(),
+			client.posts.list(),
+		]);
+		categories = categoryList;
+		slugs = postList.map((p) => p.slug);
+	} catch {
+		// CDN が未デプロイまたは空の場合のフォールバック
+	}
+	return { categories, slugs };
 });
 
 export const Route = createFileRoute("/posts/new")({

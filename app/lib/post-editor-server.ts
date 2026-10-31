@@ -1,4 +1,4 @@
-import type { WikiPostDetail } from "@morinoparty/hagaki";
+import type { WikiCategory, WikiPostDetail } from "@morinoparty/hagaki";
 import { validateAvifUpload } from "@morinoparty/hagaki/image";
 import { createServerFn } from "@tanstack/react-start";
 import { requireSession } from "./auth-server";
@@ -43,7 +43,12 @@ export const getEditorPostFn = createServerFn({ method: "GET" })
 		await requireSession();
 		const { env } = await import("cloudflare:workers");
 		const client = await getHagakiClient();
-		const existing = await client.posts.getBySlug(data.slug);
+		let existing: WikiPostDetail | null = null;
+		try {
+			existing = await client.posts.getBySlug(data.slug);
+		} catch {
+			// Not found on CDN or CDN unavailable
+		}
 		// A non-uuid `?uuid=` search param must not leak into repo paths —
 		// drop it and let emptyPost mint a fresh one instead.
 		const knownUuid =
@@ -55,9 +60,15 @@ export const getEditorPostFn = createServerFn({ method: "GET" })
 			title: data.seed?.title ?? "",
 			category: data.seed?.category ?? "",
 		};
+		let categories: WikiCategory[] = [];
+		try {
+			categories = await client.categories.list();
+		} catch {
+			// Categories CDN unavailable
+		}
 		return {
 			post,
-			categories: await client.categories.list(),
+			categories,
 			cdnBaseUrl: getStringEnv(env, "HAGAKI_CDN_BASE_URL"),
 		};
 	});

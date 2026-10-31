@@ -17,7 +17,7 @@ export default defineConfig({
 		env: {
 			// Where `hagaki generate`d content is served
 			HAGAKI_CDN_BASE_URL: bindings.text(
-				"https://blog-content.moripa.workers.dev",
+				"https://blog-content.nikomaru.workers.dev",
 			),
 			HAGAKI_GITHUB_OWNER: bindings.text("Nlkomaru"),
 			HAGAKI_GITHUB_REPO: bindings.text("blog-content"),
