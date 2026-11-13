@@ -18,10 +18,12 @@
 - 作業が途中で止まった場合や、ユーザーが明示的に「push しない」「PR を作らない」と言った場合はこの限りではない。
 
 ## Repositories
+
 - アプリケーション本体: [Nlkomaru/blog.nikomaru.dev](https://github.com/Nlkomaru/blog.nikomaru.dev)
 - コンテンツ管理: [Nlkomaru/blog-content](https://github.com/Nlkomaru/blog-content)
 
 ## コミットメッセージ
+
 - コミットメッセージは英語で書き、以下のような形式で書く。
 
 ```
@@ -29,6 +31,7 @@ emoji コミットの概要
 ```
 
 例:
+
 ```
 ✨ Add new post editor feature
 🐛 Fix session check in author guard
@@ -37,10 +40,12 @@ emoji コミットの概要
 ```
 
 ## GitHub Secrets の命名規則
+
 - GitHub Actions の仕様上、シークレット名を `GITHUB_` から始めることはできません（HTTP 422 エラーとなります）。
 - OAuth 認証情報などのシークレットは `AUTH_GITHUB_ID`, `AUTH_GITHUB_SECRET` のように命名してください。
 
 ## Issueについて
+
 - 新しい機能を追加する場合は、Issueを作成してください。
 - Issueは英語で書き、適切なラベルを追加してください。
 - 現状存在しないラベルについては、勝手に作成しないでください。

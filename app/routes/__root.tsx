@@ -1,10 +1,4 @@
-import {
-	createRootRoute,
-	HeadContent,
-	Link,
-	Outlet,
-	Scripts,
-} from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { BookOpen, PenSquare, User as UserIcon } from "lucide-react";
 import type { ReactNode } from "react";
@@ -61,30 +55,17 @@ function RootComponent() {
 						>
 							ホーム
 						</Link>
-						<Link
-							to="/posts"
-							activeProps={{ className: NAV_ACTIVE }}
-							className={NAV_LINK}
-						>
+						<Link to="/posts" activeProps={{ className: NAV_ACTIVE }} className={NAV_LINK}>
 							記事
 						</Link>
-						<Link
-							to="/categories"
-							activeProps={{ className: NAV_ACTIVE }}
-							className={NAV_LINK}
-						>
+						<Link to="/categories" activeProps={{ className: NAV_ACTIVE }} className={NAV_LINK}>
 							カテゴリ
 						</Link>
 					</div>
 
 					<div className="flex items-center gap-2">
 						{session?.isAuthor && (
-							<Button
-								asChild
-								size="sm"
-								variant="default"
-								className="gap-1.5 hidden sm:inline-flex"
-							>
+							<Button asChild size="sm" variant="default" className="gap-1.5 hidden sm:inline-flex">
 								<Link to="/posts/new">
 									<PenSquare className="w-3.5 h-3.5" />
 									新規執筆
@@ -130,8 +111,7 @@ function RootComponent() {
 			<footer className="border-t py-6 bg-muted/20">
 				<div className="max-w-4xl mx-auto px-4 md:px-6 flex flex-col sm:flex-row items-center justify-between text-xs text-muted-foreground gap-2">
 					<p className="mb-0">
-						© {new Date().getFullYear()} blog.nikomaru.dev. Powered by
-						morinoparty/hagaki.
+						© {new Date().getFullYear()} blog.nikomaru.dev. Powered by morinoparty/hagaki.
 					</p>
 					<div className="flex items-center gap-4">
 						<a

@@ -3,11 +3,16 @@ import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig } from "vite-plus";
 
-const fsStub = fileURLToPath(
-	new URL("./app/lib/node-fs-stub.ts", import.meta.url),
-);
+const ignorePatterns = [
+	"**/app/routeTree.gen.ts",
+	"**/.cloudflare/**",
+	"**/dist/**",
+	"**/node_modules/**",
+];
+
+const fsStub = fileURLToPath(new URL("./app/lib/node-fs-stub.ts", import.meta.url));
 
 export default defineConfig({
 	plugins: [
@@ -47,5 +52,12 @@ export default defineConfig({
 	// resolves the wasm relative to its own package URL.
 	optimizeDeps: {
 		exclude: ["@jsquash/avif"],
+	},
+	fmt: {
+		useTabs: true,
+		ignorePatterns,
+	},
+	lint: {
+		ignorePatterns,
 	},
 });

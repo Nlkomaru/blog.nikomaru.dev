@@ -20,20 +20,21 @@ TanStack Start + Cloudflare Workers + [morinoparty/hagaki](https://github.com/mo
 
 ## ディレクトリ構成
 
-| パス | 内容 |
-|---|---|
-| `app/routes/` | TanStack Router によるファイルベースルート (`/`, `/posts`, `/posts/$slug`, `/posts/new`, `/posts/$slug/edit`, `/categories`, `/auth/sign-in`, `/api/auth/$`) |
-| `app/lib/auth.ts` | Better Auth 設定 (GitHub OAuth, DB-less セッション, ログイン制限フック) |
-| `app/lib/auth-server.ts` | サーバーサイドでの執筆権限ガード (`requireSession`) |
-| `app/lib/auth-fns.ts` | クライアント / ルーター用セッション取得 RPC (`checkAuthorSessionFn`) |
-| `app/lib/hagaki.ts` | hagaki クライアント生成 (`Nlkomaru/blog-content`) |
-| `app/lib/committer.ts` | セッションから git コミッター情報を解決 |
-| `app/lib/post-editor-server.ts` | 記事保存用の Server Function (本文と AVIF 画像を 1 コミットで GitHub へ) |
-| `cloudflare.config.ts` | Worker 設定 (Cloudflare Vite プラグイン) |
+| パス                            | 内容                                                                                                                                                         |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `app/routes/`                   | TanStack Router によるファイルベースルート (`/`, `/posts`, `/posts/$slug`, `/posts/new`, `/posts/$slug/edit`, `/categories`, `/auth/sign-in`, `/api/auth/$`) |
+| `app/lib/auth.ts`               | Better Auth 設定 (GitHub OAuth, DB-less セッション, ログイン制限フック)                                                                                      |
+| `app/lib/auth-server.ts`        | サーバーサイドでの執筆権限ガード (`requireSession`)                                                                                                          |
+| `app/lib/auth-fns.ts`           | クライアント / ルーター用セッション取得 RPC (`checkAuthorSessionFn`)                                                                                         |
+| `app/lib/hagaki.ts`             | hagaki クライアント生成 (`Nlkomaru/blog-content`)                                                                                                            |
+| `app/lib/committer.ts`          | セッションから git コミッター情報を解決                                                                                                                      |
+| `app/lib/post-editor-server.ts` | 記事保存用の Server Function (本文と AVIF 画像を 1 コミットで GitHub へ)                                                                                     |
+| `cloudflare.config.ts`          | Worker 設定 (Cloudflare Vite プラグイン)                                                                                                                     |
 
 ## 設定
 
 公開してよい設定は `cloudflare.config.ts` に定義されています:
+
 - `HAGAKI_GITHUB_OWNER`: `"Nlkomaru"`
 - `HAGAKI_GITHUB_REPO`: `"blog-content"`
 - `HAGAKI_GITHUB_BRANCH`: `"main"`
@@ -42,19 +43,21 @@ TanStack Start + Cloudflare Workers + [morinoparty/hagaki](https://github.com/mo
 
 ### シークレット (Secrets)
 
-| シークレット名 | 内容 |
-|---|---|
-| `HAGAKI_GITHUB_TOKEN` | `Nlkomaru/blog-content` の Contents (Read and write) 権限を持つ GitHub PAT |
-| `AUTH_SECRET` | Better Auth の暗号鍵 (`openssl rand -base64 32`) |
-| `GITHUB_CLIENT_ID` | GitHub OAuth App の Client ID |
-| `GITHUB_CLIENT_SECRET` | GitHub OAuth App の Client Secret |
+| シークレット名         | 内容                                                                       |
+| ---------------------- | -------------------------------------------------------------------------- |
+| `HAGAKI_GITHUB_TOKEN`  | `Nlkomaru/blog-content` の Contents (Read and write) 権限を持つ GitHub PAT |
+| `AUTH_SECRET`          | Better Auth の暗号鍵 (`openssl rand -base64 32`)                           |
+| `GITHUB_CLIENT_ID`     | GitHub OAuth App の Client ID                                              |
+| `GITHUB_CLIENT_SECRET` | GitHub OAuth App の Client Secret                                          |
 
 ローカル開発では `.dev.vars` に設定します:
+
 ```sh
 cp .dev.vars.example .dev.vars
 ```
 
 > **GitHub OAuth App 設定のコールバック URL:**
+>
 > - ローカル開発: `http://localhost:8787/api/auth/callback/github`
 > - 本番環境: `https://<your-worker-domain>/api/auth/callback/github`
 

@@ -5,13 +5,7 @@ import { Calendar, Folder, PenSquare, Search } from "lucide-react";
 import { useState } from "react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Separator } from "~/components/ui/separator";
 import { getAuth } from "../lib/auth";
@@ -53,9 +47,7 @@ function PostsIndexPage() {
 	const [query, setQuery] = useState("");
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-	const categories = Array.from(
-		new Set(posts.map((p) => p.category).filter(Boolean)),
-	) as string[];
+	const categories = Array.from(new Set(posts.map((p) => p.category).filter(Boolean))) as string[];
 
 	const filtered = posts.filter((post) => {
 		const matchesQuery =
@@ -63,8 +55,7 @@ function PostsIndexPage() {
 			post.title?.toLowerCase().includes(query.toLowerCase()) ||
 			post.description?.toLowerCase().includes(query.toLowerCase()) ||
 			post.slug.toLowerCase().includes(query.toLowerCase());
-		const matchesCategory =
-			!selectedCategory || post.category === selectedCategory;
+		const matchesCategory = !selectedCategory || post.category === selectedCategory;
 		return matchesQuery && matchesCategory;
 	});
 
@@ -114,9 +105,7 @@ function PostsIndexPage() {
 								key={cat}
 								variant={selectedCategory === cat ? "default" : "outline"}
 								className="cursor-pointer"
-								onClick={() =>
-									setSelectedCategory(cat === selectedCategory ? null : cat)
-								}
+								onClick={() => setSelectedCategory(cat === selectedCategory ? null : cat)}
 							>
 								{cat}
 							</Badge>

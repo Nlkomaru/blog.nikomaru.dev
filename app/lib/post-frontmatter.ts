@@ -36,9 +36,7 @@ export function postFrontmatter(post: WikiPostDetail) {
 		// Optional fields are omitted from the frontmatter, not written
 		// as null/empty.
 		...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
-		...(post.modified && post.modified.length > 0
-			? { modified: post.modified }
-			: {}),
+		...(post.modified && post.modified.length > 0 ? { modified: post.modified } : {}),
 		...(post.draft ? { draft: true } : {}),
 		// Keep the editor list on save; dropping it here would silently
 		// clear it from the frontmatter.

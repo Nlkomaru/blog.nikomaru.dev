@@ -71,9 +71,7 @@ function SignInPage() {
 			<Card className="w-full max-w-md shadow-sm">
 				<CardHeader className="text-center">
 					<CardTitle className="text-xl">アカウント認証</CardTitle>
-					<CardDescription>
-						blog.nikomaru.dev の執筆・管理用ログイン
-					</CardDescription>
+					<CardDescription>blog.nikomaru.dev の執筆・管理用ログイン</CardDescription>
 				</CardHeader>
 				<CardContent className="flex flex-col gap-4">
 					{session ? (
@@ -87,9 +85,7 @@ function SignInPage() {
 									/>
 								)}
 								<div className="flex-1 min-w-0">
-									<p className="font-medium text-sm truncate mb-0">
-										{session.name}
-									</p>
+									<p className="font-medium text-sm truncate mb-0">{session.name}</p>
 									<p className="text-xs text-muted-foreground truncate mb-0">
 										@{session.id} ({session.email})
 									</p>
@@ -98,10 +94,7 @@ function SignInPage() {
 
 							<div className="flex items-center gap-2">
 								{session.isAuthor ? (
-									<Badge
-										variant="default"
-										className="gap-1 bg-emerald-600 hover:bg-emerald-700"
-									>
+									<Badge variant="default" className="gap-1 bg-emerald-600 hover:bg-emerald-700">
 										<ShieldCheck className="w-3.5 h-3.5" />
 										執筆権限あり (管理者)
 									</Badge>
@@ -145,12 +138,7 @@ function SignInPage() {
 							サインアウト
 						</Button>
 					) : (
-						<Button
-							type="button"
-							disabled={busy}
-							onClick={onSignIn}
-							className="w-full gap-2"
-						>
+						<Button type="button" disabled={busy} onClick={onSignIn} className="w-full gap-2">
 							<GithubIcon className="w-4 h-4" />
 							{busy ? "GitHubへリダイレクト中…" : "GitHubでサインイン"}
 						</Button>

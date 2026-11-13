@@ -4,10 +4,7 @@ export function getStringEnv(env: unknown, key: string, fallback = ""): string {
 	return typeof value === "string" ? value : fallback;
 }
 
-export function getOptionalStringEnv(
-	env: unknown,
-	key: string,
-): string | undefined {
+export function getOptionalStringEnv(env: unknown, key: string): string | undefined {
 	const value = getStringEnv(env, key);
 	return value.length > 0 ? value : undefined;
 }

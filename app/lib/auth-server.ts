@@ -6,18 +6,13 @@ import { getAuth } from "./auth";
  * ユーザーがブログの執筆を許可されているか検証
  */
 export function isAllowedAuthor(
-	user:
-		| { id?: string | null; name?: string | null; email?: string | null }
-		| null
-		| undefined,
+	user: { id?: string | null; name?: string | null; email?: string | null } | null | undefined,
 ): boolean {
 	if (!user) return false;
 	const allowedList = (env.ALLOWED_USERS || "Nlkomaru")
 		.split(",")
 		.map((u) => u.trim().toLowerCase());
-	const candidates = [user.id, user.name, user.email].filter(
-		Boolean,
-	) as string[];
+	const candidates = [user.id, user.name, user.email].filter(Boolean) as string[];
 	return candidates.some((val) => allowedList.includes(val.toLowerCase()));
 }
 
@@ -49,8 +44,7 @@ export async function requireSession() {
 		throw new Response(
 			JSON.stringify({
 				error: "forbidden",
-				message:
-					"このユーザーには執筆権限がありません（許可されたユーザーのみ執筆可能です）",
+				message: "このユーザーには執筆権限がありません（許可されたユーザーのみ執筆可能です）",
 			}),
 			{
 				status: 403,
