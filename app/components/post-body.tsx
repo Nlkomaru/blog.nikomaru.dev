@@ -43,11 +43,7 @@ interface MdNode {
 	data?: { hName?: string; hProperties?: Record<string, unknown> };
 }
 
-const DIRECTIVE_TYPES = new Set([
-	"textDirective",
-	"leafDirective",
-	"containerDirective",
-]);
+const DIRECTIVE_TYPES = new Set(["textDirective", "leafDirective", "containerDirective"]);
 
 // remark-mdx が生む JSX / 式 / ESM ノード。<Image /> 以外はリテラル復元。
 const MDX_TYPES = new Set([
@@ -92,9 +88,7 @@ function mapSpecialNode(node: MdNode, source: string): MdNode {
 			hProperties: {
 				imageid: attrs.id,
 				// hast 属性は文字列運搬 — 保存形の base64 に揃える。
-				blurhash64: attrs.blurhash
-					? blurhashToBase64(attrs.blurhash)
-					: undefined,
+				blurhash64: attrs.blurhash ? blurhashToBase64(attrs.blurhash) : undefined,
 				w: attrs.width ?? undefined,
 				h: attrs.height ?? undefined,
 				alt: attrs.alt ?? undefined,
@@ -103,11 +97,7 @@ function mapSpecialNode(node: MdNode, source: string): MdNode {
 		node.children = [];
 		return node;
 	}
-	if (
-		node.type === "containerDirective" &&
-		node.name &&
-		ADMONITION_KINDS.has(node.name)
-	) {
+	if (node.type === "containerDirective" && node.name && ADMONITION_KINDS.has(node.name)) {
 		node.data = {
 			hName: "hagaki-admonition",
 			hProperties: { kind: node.name },
@@ -118,10 +108,7 @@ function mapSpecialNode(node: MdNode, source: string): MdNode {
 	// テキストとして復元する。
 	const start = node.position?.start?.offset;
 	const end = node.position?.end?.offset;
-	const literal =
-		start != null && end != null
-			? source.slice(start, end)
-			: (node.value ?? "");
+	const literal = start != null && end != null ? source.slice(start, end) : (node.value ?? "");
 	return { type: "text", value: literal };
 }
 

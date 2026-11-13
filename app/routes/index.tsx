@@ -1,23 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { getRequest } from "@tanstack/react-start/server";
-import {
-	ArrowRight,
-	BookOpen,
-	Calendar,
-	FolderTree,
-	PenSquare,
-	Sparkles,
-} from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, FolderTree, PenSquare, Sparkles } from "lucide-react";
 import { Badge } from "~/components/ui/badge";
 import { Button } from "~/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "~/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card";
 import { GithubIcon } from "~/components/ui/github-icon";
 import { Separator } from "~/components/ui/separator";
 import { getAuth } from "../lib/auth";
@@ -89,10 +76,7 @@ function HomePage() {
 			<section className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-card via-card to-muted/40 p-8 sm:p-12 shadow-sm">
 				<div className="flex flex-col gap-4 max-w-2xl">
 					<div className="flex items-center gap-2">
-						<Badge
-							variant="outline"
-							className="gap-1.5 py-1 px-3 text-xs font-medium"
-						>
+						<Badge variant="outline" className="gap-1.5 py-1 px-3 text-xs font-medium">
 							<Sparkles className="w-3.5 h-3.5 text-primary" />
 							TanStack Start + hagaki
 						</Badge>
@@ -106,9 +90,8 @@ function HomePage() {
 						blog.nikomaru.dev
 					</h1>
 					<p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-2">
-						Nlkomaru による技術・開発ログ。GitHub をコンテンツストレージにする
-						Headless CMS「morinoparty/hagaki」と TanStack Start + shadcn
-						で構築されています。
+						Nlkomaru による技術・開発ログ。GitHub をコンテンツストレージにする Headless
+						CMS「morinoparty/hagaki」と TanStack Start + shadcn で構築されています。
 					</p>
 					<div className="flex flex-wrap items-center gap-3 pt-2">
 						<Button asChild size="default" className="gap-2">
@@ -118,29 +101,15 @@ function HomePage() {
 							</Link>
 						</Button>
 						{isAuthor ? (
-							<Button
-								asChild
-								variant="outline"
-								size="default"
-								className="gap-2"
-							>
+							<Button asChild variant="outline" size="default" className="gap-2">
 								<Link to="/posts/new">
 									<PenSquare className="w-4 h-4" />
 									新しい記事を書く
 								</Link>
 							</Button>
 						) : (
-							<Button
-								asChild
-								variant="outline"
-								size="default"
-								className="gap-2"
-							>
-								<a
-									href="https://github.com/Nlkomaru"
-									target="_blank"
-									rel="noreferrer"
-								>
+							<Button asChild variant="outline" size="default" className="gap-2">
+								<a href="https://github.com/Nlkomaru" target="_blank" rel="noreferrer">
 									<GithubIcon className="w-4 h-4" />
 									GitHub Profile
 								</a>
@@ -154,12 +123,8 @@ function HomePage() {
 			<section className="flex flex-col gap-6">
 				<div className="flex items-center justify-between">
 					<div>
-						<h2 className="text-2xl font-bold tracking-tight mb-1">
-							最新の記事
-						</h2>
-						<p className="text-sm text-muted-foreground mb-0">
-							最近投稿された記事の一覧です
-						</p>
+						<h2 className="text-2xl font-bold tracking-tight mb-1">最新の記事</h2>
+						<p className="text-sm text-muted-foreground mb-0">最近投稿された記事の一覧です</p>
 					</div>
 					<Button
 						asChild
@@ -178,9 +143,7 @@ function HomePage() {
 					<Card className="border-dashed">
 						<CardContent className="flex flex-col items-center justify-center py-12 text-center text-muted-foreground">
 							<BookOpen className="w-8 h-8 mb-2 opacity-50" />
-							<p className="font-medium text-sm mb-1">
-								記事がまだ公開されていません
-							</p>
+							<p className="font-medium text-sm mb-1">記事がまだ公開されていません</p>
 							<p className="text-xs text-muted-foreground max-w-sm mb-4">
 								コンテンツリポジトリ <code>Nlkomaru/blog-content</code>{" "}
 								に記事を追加するとここに表示されます。
@@ -279,31 +242,22 @@ function HomePage() {
 					<h3 className="text-base font-semibold mb-0">システム構成 & 連携</h3>
 					<div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-muted-foreground pt-1">
 						<div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/30 border">
-							<span className="font-semibold text-foreground">
-								Content Repository
-							</span>
+							<span className="font-semibold text-foreground">Content Repository</span>
 							<code>Nlkomaru/blog-content</code>
-							<p className="mb-0">
-								記事本体 (MDX) と画像 (AVIF) を 1 コミットで GitHub 上に管理
-							</p>
+							<p className="mb-0">記事本体 (MDX) と画像 (AVIF) を 1 コミットで GitHub 上に管理</p>
 						</div>
 						<div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/30 border">
-							<span className="font-semibold text-foreground">
-								Auth & Access Control
-							</span>
+							<span className="font-semibold text-foreground">Auth & Access Control</span>
 							<span>Better Auth (GitHub OAuth)</span>
 							<p className="mb-0">
 								許可されたユーザー（Nlkomaru）のみ執筆・編集できるようログイン制限
 							</p>
 						</div>
 						<div className="flex flex-col gap-1 p-3 rounded-lg bg-muted/30 border">
-							<span className="font-semibold text-foreground">
-								Framework & UI
-							</span>
+							<span className="font-semibold text-foreground">Framework & UI</span>
 							<span>TanStack Start + shadcn</span>
 							<p className="mb-0">
-								高速な SSR・型安全ルーティング・Tailwind CSS
-								による洗練されたデザイン
+								高速な SSR・型安全ルーティング・Tailwind CSS による洗練されたデザイン
 							</p>
 						</div>
 					</div>

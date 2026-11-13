@@ -3,16 +3,14 @@ import { createServerFn } from "@tanstack/react-start";
 import { requireSession } from "./auth-server";
 import { getHagakiClient } from "./hagaki";
 
-export const listCategoriesFn = createServerFn({ method: "GET" }).handler(
-	async () => {
-		try {
-			const client = await getHagakiClient();
-			return await client.categories.list();
-		} catch {
-			return [];
-		}
-	},
-);
+export const listCategoriesFn = createServerFn({ method: "GET" }).handler(async () => {
+	try {
+		const client = await getHagakiClient();
+		return await client.categories.list();
+	} catch {
+		return [];
+	}
+});
 
 export const getCategoryFn = createServerFn({ method: "GET" })
 	.validator((slug: string) => slug)
@@ -35,9 +33,7 @@ export const commitCategoryFn = createServerFn({ method: "POST" })
 		// The slug is concatenated straight into a repo path — never trust
 		// the client to keep it inside content/categories/.
 		if (!SLUG_RE.test(data.slug)) {
-			throw new Error(
-				`commitCategoryFn: invalid slug "${data.slug}" (allowed: a-z 0-9 -)`,
-			);
+			throw new Error(`commitCategoryFn: invalid slug "${data.slug}" (allowed: a-z 0-9 -)`);
 		}
 		const client = await getHagakiClient();
 		const path = `content/categories/${data.slug}.json`;

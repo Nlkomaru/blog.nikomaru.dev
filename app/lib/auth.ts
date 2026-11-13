@@ -28,13 +28,11 @@ async function buildAuth(baseURL: string) {
 		socialProviders: {
 			github: {
 				clientId:
-					(env as unknown as Record<string, string | undefined>)
-						.AUTH_GITHUB_ID ||
+					(env as unknown as Record<string, string | undefined>).AUTH_GITHUB_ID ||
 					env.GITHUB_CLIENT_ID ||
 					"",
 				clientSecret:
-					(env as unknown as Record<string, string | undefined>)
-						.AUTH_GITHUB_SECRET ||
+					(env as unknown as Record<string, string | undefined>).AUTH_GITHUB_SECRET ||
 					env.GITHUB_CLIENT_SECRET ||
 					"",
 				mapProfileToUser: (profile) => {
@@ -57,9 +55,7 @@ async function buildAuth(baseURL: string) {
 			},
 			validateUserInfo: async ({ user, source }) => {
 				// 登録・ログイン制限: allowedList (デフォルト: Nlkomaru) に一致するユーザーのみ許可
-				const rawProfile = (
-					source as { oauth?: { profile?: { login?: string } } }
-				)?.oauth?.profile;
+				const rawProfile = (source as { oauth?: { profile?: { login?: string } } })?.oauth?.profile;
 				const candidateIds = [
 					user.id,
 					user.name,
@@ -68,15 +64,12 @@ async function buildAuth(baseURL: string) {
 					rawProfile?.login,
 				].filter(Boolean) as string[];
 
-				const isAllowed = candidateIds.some((val) =>
-					allowedList.includes(val.toLowerCase()),
-				);
+				const isAllowed = candidateIds.some((val) => allowedList.includes(val.toLowerCase()));
 
 				if (!isAllowed) {
 					return {
 						error: "forbidden",
-						errorDescription:
-							"このブログは許可されたユーザーのみ執筆・ログインできます。",
+						errorDescription: "このブログは許可されたユーザーのみ執筆・ログインできます。",
 					};
 				}
 			},
@@ -86,8 +79,7 @@ async function buildAuth(baseURL: string) {
 				create: {
 					// user.id を GitHub の login (username) に固定する
 					before: async (user) => {
-						const username = (user as { githubUsername?: string })
-							.githubUsername;
+						const username = (user as { githubUsername?: string }).githubUsername;
 						if (typeof username === "string" && username.length > 0) {
 							return { data: { id: username } };
 						}

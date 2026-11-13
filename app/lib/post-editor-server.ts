@@ -52,9 +52,7 @@ export const getEditorPostFn = createServerFn({ method: "GET" })
 		// A non-uuid `?uuid=` search param must not leak into repo paths —
 		// drop it and let emptyPost mint a fresh one instead.
 		const knownUuid =
-			data.knownUuid && UUID_REGEX.test(data.knownUuid)
-				? data.knownUuid
-				: undefined;
+			data.knownUuid && UUID_REGEX.test(data.knownUuid) ? data.knownUuid : undefined;
 		const post = existing ?? {
 			...emptyPost(data.slug, knownUuid),
 			title: data.seed?.title ?? "",
@@ -88,9 +86,7 @@ export const commitPostFn = createServerFn({ method: "POST" })
 		// lib/committer.ts)。sub が hagaki の userId になる。
 		const committer = await resolveCommitter();
 		if (!data.post.uuid) {
-			throw new Error(
-				"commitPostFn: post.uuid is required (mint one on first save)",
-			);
+			throw new Error("commitPostFn: post.uuid is required (mint one on first save)");
 		}
 		// The uuid becomes a repo path segment — never trust the client.
 		if (!UUID_REGEX.test(data.post.uuid)) {
@@ -103,14 +99,8 @@ export const commitPostFn = createServerFn({ method: "POST" })
 		const articleDir = `content/article/${data.post.uuid}`;
 		const assetsPrefix = `${articleDir}/assets/`;
 		const assertOwned = (path: string, kind: string) => {
-			if (
-				!path.startsWith(assetsPrefix) ||
-				path.includes("..") ||
-				path.endsWith("/")
-			) {
-				throw new Error(
-					`commitPostFn: refusing to ${kind} "${path}" — outside ${assetsPrefix}`,
-				);
+			if (!path.startsWith(assetsPrefix) || path.includes("..") || path.endsWith("/")) {
+				throw new Error(`commitPostFn: refusing to ${kind} "${path}" — outside ${assetsPrefix}`);
 			}
 		};
 
@@ -133,20 +123,13 @@ export const commitPostFn = createServerFn({ method: "POST" })
 		const { default: matter } = await import("gray-matter");
 		const client = await getHagakiClient();
 		const postPath = `${articleDir}/index.mdx`;
-		const markdown = matter.stringify(
-			data.post.body || "",
-			postFrontmatter(data.post),
-		);
+		const markdown = matter.stringify(data.post.body || "", postFrontmatter(data.post));
 
 		const result = await client.commits.commitFiles({
 			files: [...imageFiles, { path: postPath, content: markdown }],
 			deletePaths,
 			committer,
-			commitMessage: commitMessage(
-				data.post.slug,
-				imageFiles.length,
-				deletePaths.length,
-			),
+			commitMessage: commitMessage(data.post.slug, imageFiles.length, deletePaths.length),
 		});
 
 		return result;
@@ -156,8 +139,7 @@ export const commitPostFn = createServerFn({ method: "POST" })
 function commitMessage(slug: string, added: number, removed: number): string {
 	const segments: string[] = [];
 	if (added > 0) segments.push(`+${added} image${added === 1 ? "" : "s"}`);
-	if (removed > 0)
-		segments.push(`-${removed} image${removed === 1 ? "" : "s"}`);
+	if (removed > 0) segments.push(`-${removed} image${removed === 1 ? "" : "s"}`);
 	if (segments.length === 0) return `📝 Update post: ${slug}`;
 	return `📝 Update post: ${slug} (${segments.join(", ")})`;
 }

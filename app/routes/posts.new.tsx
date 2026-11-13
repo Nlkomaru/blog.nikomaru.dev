@@ -93,11 +93,7 @@ function NewPostPage() {
 						)}
 					</div>
 
-					<CategoryInput
-						value={category}
-						categories={categories}
-						onChange={setCategory}
-					/>
+					<CategoryInput value={category} categories={categories} onChange={setCategory} />
 				</CardContent>
 			</Card>
 

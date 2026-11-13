@@ -20,11 +20,6 @@
 			"~/*": ["./app/*"]
 		}
 	},
-	"include": [
-		"app/**/*",
-		"vite.config.ts",
-		"cloudflare.config.ts",
-		".cloudflare/types"
-	],
+	"include": ["app/**/*", "vite.config.ts", "cloudflare.config.ts", ".cloudflare/types"],
 	"exclude": ["node_modules", "dist"]
 }

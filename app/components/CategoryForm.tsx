@@ -19,21 +19,15 @@ export interface CategoryFormProps {
 	existingSlugs?: string[];
 }
 
-export function CategoryForm({
-	initial,
-	slugLocked,
-	existingSlugs = [],
-}: CategoryFormProps) {
+export function CategoryForm({ initial, slugLocked, existingSlugs = [] }: CategoryFormProps) {
 	const router = useRouter();
 	const [category, setCategory] = useState<WikiCategory>(initial);
 	const [saving, setSaving] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
 	const slug = slugLocked ? category.slug : toUrlSlug(category.title);
-	const slugTaken =
-		!slugLocked && slug.length > 0 && existingSlugs.includes(slug);
-	const update = (patch: Partial<WikiCategory>) =>
-		setCategory((c) => ({ ...c, ...patch }));
+	const slugTaken = !slugLocked && slug.length > 0 && existingSlugs.includes(slug);
+	const update = (patch: Partial<WikiCategory>) => setCategory((c) => ({ ...c, ...patch }));
 
 	async function onSave() {
 		setSaving(true);
@@ -51,9 +45,7 @@ export function CategoryForm({
 
 	return (
 		<section className="flex flex-col gap-6">
-			<h1 className="mb-0">
-				{slugLocked ? `カテゴリを編集: ${slug}` : "新規カテゴリ"}
-			</h1>
+			<h1 className="mb-0">{slugLocked ? `カテゴリを編集: ${slug}` : "新規カテゴリ"}</h1>
 
 			<Card>
 				<CardHeader>

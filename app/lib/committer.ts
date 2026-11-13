@@ -31,9 +31,7 @@ export async function resolveCommitter(): Promise<Committer> {
 		},
 	);
 	if (!committer) {
-		throw new Error(
-			"committer: セッション情報から Committer を生成できませんでした",
-		);
+		throw new Error("committer: セッション情報から Committer を生成できませんでした");
 	}
 	return committer;
 }

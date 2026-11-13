@@ -16,24 +16,15 @@ import { imagePathsFor } from "./image-paths";
  */
 
 /** コミット済み画像の表示 URL（CDN）。 */
-export function committedImageUrl(
-	id: string,
-	postUuid: string,
-	cdnBaseUrl: string,
-): string {
-	return resolveCdnUrl(
-		`${imagePathsFor(postUuid).urlPrefix}${id}.avif`,
-		cdnBaseUrl,
-	);
+export function committedImageUrl(id: string, postUuid: string, cdnBaseUrl: string): string {
+	return resolveCdnUrl(`${imagePathsFor(postUuid).urlPrefix}${id}.avif`, cdnBaseUrl);
 }
 
 /**
  * エディタの `onInsertImage`。`startPending` は blurhash が出た時点で
  * resolve するので、エンコードを待たずに `<Image />` を挿入できる。
  */
-export async function handleInsertImage(
-	file: File,
-): Promise<ImageComponentAttrs> {
+export async function handleInsertImage(file: File): Promise<ImageComponentAttrs> {
 	const entry = await startPending({ file });
 	return {
 		id: entry.id,
@@ -48,10 +39,7 @@ export async function handleInsertImage(
  * 旧形式 `![alt](/article/...)` 画像の表示 URL 解決（CDN のみ）。
  * `<Image />` は `imagePreviewUrlFor` 側で解決される。
  */
-export async function handleImagePreview(
-	src: string,
-	cdnBaseUrl: string,
-): Promise<string> {
+export async function handleImagePreview(src: string, cdnBaseUrl: string): Promise<string> {
 	return resolveCdnUrl(src, cdnBaseUrl);
 }
 
@@ -71,9 +59,7 @@ export async function collectNewImages(
 ): Promise<EncodedImage[]> {
 	let images: Awaited<ReturnType<typeof collectPendingImages>>;
 	try {
-		images = await collectPendingImages(
-			findUncommittedImageIds(body, committedBody),
-		);
+		images = await collectPendingImages(findUncommittedImageIds(body, committedBody));
 	} catch (e) {
 		if (e instanceof PendingImageError) {
 			throw new Error(

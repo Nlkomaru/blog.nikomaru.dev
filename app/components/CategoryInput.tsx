@@ -14,11 +14,7 @@ export interface CategoryInputProps {
  * up as suggestions, but a new slug can still be typed in (hybrid). The
  * stored value is the category *slug* to match `categories/<slug>.json`.
  */
-export function CategoryInput({
-	value,
-	categories,
-	onChange,
-}: CategoryInputProps) {
+export function CategoryInput({ value, categories, onChange }: CategoryInputProps) {
 	const listId = useId();
 	return (
 		<div className="flex flex-col gap-1.5">

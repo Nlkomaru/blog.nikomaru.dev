@@ -31,9 +31,7 @@ import { commitPostFn, getEditorPostFn } from "../lib/post-editor-server";
 // MDXEditor (透過に hagaki が wrap している) は client-only なので、
 // `~/components/editor` (composite なツールバー+コンテンツのスタイル定義) を
 // lazy import で切り出してから読み込む。
-const Editor = lazy(() =>
-	import("~/components/editor").then((m) => ({ default: m.Editor })),
-);
+const Editor = lazy(() => import("~/components/editor").then((m) => ({ default: m.Editor })));
 
 interface EditSearch {
 	/** Seed values carried from `/posts/new` for a brand-new post. */
@@ -104,11 +102,7 @@ function EditPostPage() {
 			// the whole session — a retried save hits the same article dir.
 			const { uuid, body } = post;
 			const images = await collectNewImages(body, committedBody);
-			const deletePaths = diffRemovedImagePaths(
-				committedBody,
-				body,
-				imagePathsFor(uuid),
-			);
+			const deletePaths = diffRemovedImagePaths(committedBody, body, imagePathsFor(uuid));
 			const result = await commitPostFn({
 				data: { post, images, deletePaths },
 			});
@@ -182,9 +176,7 @@ function EditPostPage() {
 				<div className="rounded-lg border bg-card overflow-hidden">
 					<Suspense
 						fallback={
-							<div className="p-4 text-sm text-muted-foreground">
-								エディタを読み込み中…
-							</div>
+							<div className="p-4 text-sm text-muted-foreground">エディタを読み込み中…</div>
 						}
 					>
 						<Editor
@@ -199,8 +191,7 @@ function EditPostPage() {
 							imagePreviewUrlFor={(id) =>
 								// 未コミットの画像はメモリ上の object URL、
 								// コミット済みは CDN。
-								getPending(id)?.previewUrl ??
-								committedImageUrl(id, post.uuid, cdnBaseUrl)
+								getPending(id)?.previewUrl ?? committedImageUrl(id, post.uuid, cdnBaseUrl)
 							}
 							onImagePreview={(src) => handleImagePreview(src, cdnBaseUrl)}
 						/>
@@ -212,8 +203,7 @@ function EditPostPage() {
 				<div
 					className={cn(
 						"rounded-md border px-3 py-2 text-sm",
-						statusMsg.kind === "success" &&
-							"border-foreground/20 bg-accent text-foreground",
+						statusMsg.kind === "success" && "border-foreground/20 bg-accent text-foreground",
 						statusMsg.kind === "error" &&
 							"border-destructive/30 bg-destructive/10 text-destructive",
 					)}
@@ -223,19 +213,11 @@ function EditPostPage() {
 			)}
 
 			<div className="sticky bottom-0 -mx-4 md:-mx-6 border-t bg-background/80 px-4 md:px-6 py-3 backdrop-blur flex items-center justify-end gap-3">
-				{imagesEncoding && (
-					<span className="text-sm text-muted-foreground">画像の変換待ち…</span>
-				)}
+				{imagesEncoding && <span className="text-sm text-muted-foreground">画像の変換待ち…</span>}
 				{imagesFailed && (
-					<span className="text-sm text-destructive">
-						画像の変換に失敗しています
-					</span>
+					<span className="text-sm text-destructive">画像の変換に失敗しています</span>
 				)}
-				<Button
-					type="button"
-					disabled={saving || imagesEncoding || imagesFailed}
-					onClick={onSave}
-				>
+				<Button type="button" disabled={saving || imagesEncoding || imagesFailed} onClick={onSave}>
 					{saving ? "保存中…" : imagesEncoding ? "画像処理中…" : "保存"}
 				</Button>
 			</div>
@@ -254,15 +236,7 @@ function saveMessage(commitSha: string, removedCount: number): string {
 	return `Saved: ${short} (removed ${removedCount} image${removedCount === 1 ? "" : "s"})`;
 }
 
-function PostField({
-	id,
-	label,
-	children,
-}: {
-	id: string;
-	label: string;
-	children: ReactNode;
-}) {
+function PostField({ id, label, children }: { id: string; label: string; children: ReactNode }) {
 	return (
 		<div className="flex flex-col gap-1.5">
 			<Label htmlFor={id}>{label}</Label>

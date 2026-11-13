@@ -109,9 +109,7 @@ function PostViewPage() {
 					{post.title || post.slug}
 				</h1>
 				{post.description && (
-					<p className="text-base text-muted-foreground mb-0 leading-relaxed">
-						{post.description}
-					</p>
+					<p className="text-base text-muted-foreground mb-0 leading-relaxed">{post.description}</p>
 				)}
 			</header>
 
@@ -132,12 +130,7 @@ function PostViewPage() {
 			<Separator />
 
 			<div className="flex items-center justify-between pt-2">
-				<Button
-					asChild
-					variant="ghost"
-					size="sm"
-					className="gap-1 text-muted-foreground"
-				>
+				<Button asChild variant="ghost" size="sm" className="gap-1 text-muted-foreground">
 					<Link to="/posts">
 						<ArrowLeft className="w-4 h-4" />
 						記事一覧へ戻る
