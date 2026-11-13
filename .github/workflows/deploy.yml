@@ -37,7 +37,7 @@ jobs:
 
       - if: github.event_name == 'push'
         name: Load Production Secrets
-        uses: nlkomaru/secret-manager@2
+        uses: nlkomaru/secret-manager@v2
         with:
           project: "blog.nikomaru.dev"
           env: "production"
